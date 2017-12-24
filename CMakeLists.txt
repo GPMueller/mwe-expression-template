@@ -1,5 +1,5 @@
 ######### CMake Version #####################
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.9)
 #############################################
 
 
@@ -36,6 +36,7 @@ set( CMAKE_DISABLE_IN_SOURCE_BUILD ON )
 set(HEADER_FILES
     include/FieldMath.hpp
     include/detail/Field.hpp
+    include/detail/FieldExpression.hpp
 )
 
 set(SOURCE_FILES
@@ -52,7 +53,7 @@ target_link_libraries( ${EXECUTABLE_NAME} ${CUDA_LIBRARIES})
 target_include_directories( ${EXECUTABLE_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/include)
 target_include_directories( ${EXECUTABLE_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/thirdparty)
 
-set_property(TARGET ${EXECUTABLE_NAME} PROPERTY CXX_STANDARD 11)
+set_property(TARGET ${EXECUTABLE_NAME} PROPERTY CXX_STANDARD 17)
 set_property(TARGET ${EXECUTABLE_NAME} PROPERTY CXX_STANDARD_REQUIRED ON)
 set_property(TARGET ${EXECUTABLE_NAME} PROPERTY CXX_EXTENSIONS OFF)
 #############################################
