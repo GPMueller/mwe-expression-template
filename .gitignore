@@ -1,43 +1,17 @@
 ### Directories ###
 build/*
 _build/*
-output/*
-output_llg/*
-output_gneb/*
-output_mmf/*
 Testing/*
 
 ### Subdirectories ###
 */build/*
-*/output/*
-*/output_llg/*
-*/output_gneb/*
-*/output_mmf/*
 
 ### Keep Directories ###
 !build/.gitkeep
 !output/.gitkeep
 
-### Output Logs ###
-Log.txt
-Log_*
-*/Log_*
-input_*
-*/input_*
-*_Screenshot_*
-
 ### Executables and Libraries ###
-/spirit
-spirit.js
-spirit.js.mem
-
-### Generated Files
-core/python/LICENSE.txt
-VERSION.txt
-scalar.py
-version.py
-windows_metafile.rc
-
+run
 
 # Created by https://www.gitignore.io/api/windows,osx,linux,visualstudio,visualstudiocode,cmake,python,c++,qt
 
