@@ -52,20 +52,30 @@ namespace FieldMath::detail
         const Container& data()                     const { return _container; }
         Container&       data()                           { return _container; }
 
-        // Field operation functions
-        // template <typename R, typename R2>
-        // void dot(const Field<T,R2> & field);
-
         template <typename R2>
         Field<scalar> dot(const Field<Vector3,R2> & field)
         {
             static_assert(std::is_same_v<T, Vector3>, "Field<...>.dot(...) is only available on Field<Vector3>");
 
+            // TODO: move this into a new expression
             assert(size() == field.size());
-            Field<scalar> ret(field.size());
-            for (size_t i = 0; i != field.size(); ++i)
+            Field<scalar> ret(size());
+            for (size_t i = 0; i != size(); ++i)
             {
                 ret[i] = _container[i].dot(field[i]);
+            }
+            return ret;
+        }
+        template <typename R2>
+        Field<scalar> dot(const Vector3 & vec)
+        {
+            static_assert(std::is_same_v<T, Vector3>, "Field<...>.dot(...) is only available on Field<Vector3>");
+
+            // TODO: move this into a new expression
+            Field<scalar> ret(size());
+            for (size_t i = 0; i != size(); ++i)
+            {
+                ret[i] = _container[i].dot(vec);
             }
             return ret;
         }
@@ -75,11 +85,25 @@ namespace FieldMath::detail
         {
             static_assert(std::is_same_v<T, Vector3>, "Field<...>.cross(...) is only available on Field<Vector3>");
             
+            // TODO: move this into a new expression
             assert(size() == field.size());
-            Field<Vector3> ret(field.size());
-            for (size_t i = 0; i != field.size(); ++i)
+            Field<Vector3> ret(size());
+            for (size_t i = 0; i != size(); ++i)
             {
                 ret[i] = _container[i].cross(field[i]);
+            }
+            return ret;
+        }
+        template <typename R2>
+        Field<Vector3> cross(const Vector3 & vec)
+        {
+            static_assert(std::is_same_v<T, Vector3>, "Field<...>.cross(...) is only available on Field<Vector3>");
+            
+            // TODO: move this into a new expression
+            Field<Vector3> ret(size());
+            for (size_t i = 0; i != size(); ++i)
+            {
+                ret[i] = _container[i].cross(vec);
             }
             return ret;
         }
