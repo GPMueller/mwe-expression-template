@@ -1,47 +1,56 @@
 #pragma once
 
+#include <cassert>
 #include <vector>
 
-#include <detail/FieldExpression.hpp>
+#include <detail/Typedefs.hpp>
 
 namespace FieldMath::detail 
 {
-    typedef double scalar;
-
-    template <typename T>
-    class Field : public FieldExpression<Field<T>>
+    template<typename T, typename Container = std::vector<T>>
+    class Field
     {
-        std::vector<T> _contents;
+        Container _container;
 
     public:
+        // Field with initial size
+        Field(const std::size_t n) : _container(n){}
 
-        scalar   operator[](size_t i) const { return _contents[i]; }
-        scalar & operator[](size_t i)       { return _contents[i]; }
-        size_t   size() const               { return _contents.size(); }
+        // Field with initial size and value
+        Field(const std::size_t n, const T initialValue) : _container(n, initialValue){}
 
+        // Constructor for underlying container
+        Field(const Container& other) : _container(other){}
 
-        Field(typename std::vector<T>::size_type N, T initvalue)
+        // Assignment operator for Field of different type
+        template<typename T2, typename R2>
+        Field& operator= (const Field<T2, R2>& other)
         {
-            this->_contents = std::vector<T>(N, initvalue);
+            assert(size() == other.size());
+            for (std::size_t i = 0; i < _container.size(); ++i)
+                _container[i] = other[i];
+            return *this;
         }
-        Field(size_t n) : _contents(n) {}
-
-        // construct vector using initializer list 
-        Field(std::initializer_list<scalar> init)
-        {
-            for(auto i : init)
-                _contents.push_back(i);
-        }
-
-
-        // A Field can be constructed from any FieldExpression, forcing its evaluation.
-        template <typename E>
-        Field(FieldExpression<E> const& field) : _contents(field.size())
+        // A Field can be constructed such as to force its evaluation.
+        template <typename T2, typename R2>
+        Field(Field<T2, R2> const& field) : _container(field.size())
         {
             for (size_t i = 0; i != field.size(); ++i)
             {
-                _contents[i] = field[i];
+                _container[i] = field[i];
             }
         }
+
+        // Size of underlying container
+        std::size_t size()                          const { return _container.size(); }
+
+        // Index operators
+        T           operator[](const std::size_t i) const { return _container[i]; }
+        T&          operator[](const std::size_t i)       { return _container[i]; }
+
+        // Returns the underlying data
+        const Container& data()                     const { return _container; }
+        Container&       data()                           { return _container; }
     };
 }
+#include <detail/FieldExpression.hpp>

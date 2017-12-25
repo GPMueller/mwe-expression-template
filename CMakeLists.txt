@@ -35,6 +35,7 @@ set( CMAKE_DISABLE_IN_SOURCE_BUILD ON )
 #############################################
 set(HEADER_FILES
     include/FieldMath.hpp
+    include/detail/Typedefs.hpp
     include/detail/Field.hpp
     include/detail/FieldExpression.hpp
 )
